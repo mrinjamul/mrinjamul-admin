@@ -1,0 +1,6 @@
+{
+  "domain": "",
+  "clientId": "",
+  "audience": "",
+  "apiOrigin":"http://localhost:3000"
+}
