@@ -1,5 +1,7 @@
 # Env & secrets
 .env
+.env.dev
+.env.prod
 *.crt
 *.key
 

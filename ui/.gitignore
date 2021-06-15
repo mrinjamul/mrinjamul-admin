@@ -25,3 +25,5 @@ yarn-error.log*
 # secrets
 auth_config.json
 .env
+.env.dev
+.env.prod
