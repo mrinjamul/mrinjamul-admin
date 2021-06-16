@@ -10,6 +10,13 @@ import (
 	"github.com/mrinjamul/mrinjamul-admin/message"
 )
 
+// GetProjectsHandler returns all current todo items
+func GetProjectsHandler(c *gin.Context) {
+	c.JSON(http.StatusOK, gin.H{
+		"message": "comming soon",
+	})
+}
+
 // GetMessagesHandler returns all current todo items
 func GetMessagesHandler(c *gin.Context) {
 	c.JSON(http.StatusOK, message.Get())

@@ -41,13 +41,14 @@ func main() {
 			c.File("./static/" + path.Join(dir, file))
 		}
 	})
-
+	// testing endpoint
 	r.GET("/api/ping", func(c *gin.Context) {
 		c.JSON(200, gin.H{
 			"message": "pong",
 		})
-
 	})
+	// coming soon
+	r.GET("/api/projects", handlers.GetProjectsHandler)
 
 	// authorized handler
 	authorized := r.Group("/")

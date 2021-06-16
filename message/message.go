@@ -68,6 +68,11 @@ type Message struct {
 
 // Get retrieves all elements from the Message list
 func Get() []Message {
+	var err error
+	list, err = getFireStoreData()
+	if err != nil {
+		panic(err)
+	}
 	return list
 }
 
