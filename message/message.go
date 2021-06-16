@@ -1,8 +1,12 @@
 package message
 
 import (
+	"context"
 	"errors"
 	"sync"
+
+	"github.com/mrinjamul/mrinjamul-admin/firebases"
+	"google.golang.org/api/iterator"
 )
 
 var (
@@ -16,12 +20,40 @@ func init() {
 }
 
 func initialiseList() {
-	list = []Message{
-		{"1", "Injamul", "mrinjamul@gmail.com", "Hello", "Hi How are you", false},
-		{"2", "Inja", "mrinja@gmail.com", "Hello", "Hi, 2", false},
-		{"3", "Injam", "mrinjam@gmail.com", "Hello", "Hi, 3", false},
-		{"4", "Inj", "mrinj@gmail.com", "Hello", "Hi, 4", false},
+	var err error
+	list, err = getFireStoreData()
+	if err != nil {
+		panic(err)
 	}
+
+}
+
+func getFireStoreData() ([]Message, error) {
+	ctx := context.Background()
+	app, err := firebases.GetFirebaseApp()
+	if err != nil {
+		return []Message{}, err
+	}
+	client, err := app.Firestore(ctx)
+	if err != nil {
+		return []Message{}, err
+	}
+	iter := client.Collection("github-messages").Documents(ctx)
+	messages := []Message{}
+	for {
+		msg := Message{}
+		doc, err := iter.Next()
+		if err == iterator.Done {
+			break
+		}
+		if err != nil {
+			return []Message{}, err
+		}
+		doc.DataTo(&msg)
+		messages = append(messages, msg)
+	}
+	defer client.Close()
+	return messages, nil
 }
 
 // Message data structure
@@ -30,7 +62,7 @@ type Message struct {
 	Name    string `json:"name"`
 	Email   string `json:"email"`
 	Subject string `json:"subject"`
-	Body    string `json:"body"`
+	Message string `json:"message"`
 	Read    bool   `json:"read"`
 }
 
