@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState,useEffect } from "react";
 import { Button, Alert } from "reactstrap";
 import Highlight from "../components/Highlight";
 import { useAuth0, withAuthenticationRequired } from "@auth0/auth0-react";
@@ -19,6 +19,34 @@ export const MessagesApiComponent = () => {
     loginWithPopup,
     getAccessTokenWithPopup,
   } = useAuth0();
+
+  useEffect(() => {
+    const callApi = async () => {
+      try {
+        const token = await getAccessTokenSilently();
+  
+        const response = await fetch(`${apiOrigin}/api/messages`, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
+  
+        const responseData = await response.json();
+  
+        setState({
+          ...state,
+          showResult: true,
+          apiMessage: responseData,
+        });
+      } catch (error) {
+        setState({
+          ...state,
+          error: error.error,
+        });
+      }
+    };
+    callApi();
+  })
 
   const handleConsent = async () => {
     try {
@@ -119,10 +147,6 @@ export const MessagesApiComponent = () => {
         </p>
 
         <p>
-          This will call a local API on port 3000 that would have been started
-          if you run <code>./main</code>. An access token is sent as part
-          of the request's `Authorization` header and the API will validate it
-          using the API's audience value.
         </p>
 
         {!audience && (
@@ -151,15 +175,16 @@ export const MessagesApiComponent = () => {
             </p>
           </Alert>
         )}
-
+        <div className="text-right">
         <Button
           color="primary"
           className="mt-5"
           onClick={callApi}
           disabled={!audience}
         >
-          Ping API
+          Refresh
         </Button>
+        </div>
       </div>
 
       <div className="result-block-container">
