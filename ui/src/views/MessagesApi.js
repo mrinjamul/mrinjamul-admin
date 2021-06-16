@@ -1,9 +1,11 @@
 import React, { useState,useEffect } from "react";
 import { Button, Alert } from "reactstrap";
-import Highlight from "../components/Highlight";
+// import Highlight from "../components/Highlight";
 import { useAuth0, withAuthenticationRequired } from "@auth0/auth0-react";
 import { getConfig } from "../config";
 import Loading from "../components/Loading";
+import Reader from "./components/Reader";
+import MessageBar from "./components/MessageBar";
 
 export const MessagesApiComponent = () => {
   const { apiOrigin = "http://localhost:3000", audience } = getConfig();
@@ -140,60 +142,29 @@ export const MessagesApiComponent = () => {
             </a>
           </Alert>
         )}
+        {state.showResult && <div className="text-center">
+        <MessageBar numberOfMessage={state.apiMessage.length} />
+        </div>}
 
-        <h1>Messages</h1>
-        <p className="lead">
-          Get Messages by pressing ping API
-        </p>
-
-        <p>
-        </p>
-
-        {!audience && (
-          <Alert color="warning">
-            <p>
-              You can't call the API at the moment because your application does
-              not have any configuration for <code>audience</code>, or it is
-              using the default value of <code>YOUR_API_IDENTIFIER</code>. You
-              might get this default value if you used the "Download Sample"
-              feature of{" "}
-              <a href="https://auth0.com/docs/quickstart/spa/react">
-                the quickstart guide
-              </a>
-              , but have not set an API up in your Auth0 Tenant. You can find
-              out more information on{" "}
-              <a href="https://auth0.com/docs/api">setting up APIs</a> in the
-              Auth0 Docs.
-            </p>
-            <p>
-              The audience is the identifier of the API that you want to call
-              (see{" "}
-              <a href="https://auth0.com/docs/get-started/dashboard/tenant-settings#api-authorization-settings">
-                API Authorization Settings
-              </a>{" "}
-              for more info).
-            </p>
-          </Alert>
-        )}
         <div className="text-right">
-        <Button
-          color="primary"
-          className="mt-5"
-          onClick={callApi}
-          disabled={!audience}
-        >
-          Refresh
-        </Button>
+          <Button
+            color="primary"
+            className="mt-5"
+            onClick={callApi}
+            disabled={!audience}
+          >
+            Refresh
+          </Button>
         </div>
       </div>
 
       <div className="result-block-container">
         {state.showResult && (
           <div className="result-block" data-testid="api-result">
-            <h6 className="muted">Result</h6>
-            <Highlight>
+            {/* <Highlight>
               <span>{JSON.stringify(state.apiMessage, null, 2)}</span>
-            </Highlight>
+            </Highlight> */}
+            <Reader messages={state.apiMessage} />
           </div>
         )}
       </div>
