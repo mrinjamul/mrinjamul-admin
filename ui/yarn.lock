@@ -2,7 +2,7 @@
 # yarn lockfile v1
 
 
-"@auth0/auth0-react@^1.2.0":
+"@auth0/auth0-react@^1.5.0":
   "integrity" "sha512-LFJUd3V6aKCKxblJvrz3JIHzyBCz2X3ax5RdSjxZwGr5XxPwdhogeBWcyijnuB8moKD2ncl56OpOslbVGLIJ/w=="
   "resolved" "https://registry.npmjs.org/@auth0/auth0-react/-/auth0-react-1.5.0.tgz"
   "version" "1.5.0"
@@ -5638,10 +5638,10 @@
   "resolved" "https://registry.npmjs.org/hex-color-regex/-/hex-color-regex-1.1.0.tgz"
   "version" "1.1.0"
 
-"highlight.js@^10.7.3":
-  "integrity" "sha512-tzcUFauisWKNHaRkN4Wjl/ZA07gENAjFl3J/c480dprkGTg5EQstgaNFqBfUqCq54kZRIEcreTsAgF/m2quD7A=="
-  "resolved" "https://registry.npmjs.org/highlight.js/-/highlight.js-10.7.3.tgz"
-  "version" "10.7.3"
+"highlight.js@^11.0.1":
+  "integrity" "sha512-EqYpWyTF2s8nMfttfBA2yLKPNoZCO33pLS4MnbXQ4hECf1TKujCt1Kq7QAdrio7roL4+CqsfjqwYj4tYgq0pJQ=="
+  "resolved" "https://registry.npmjs.org/highlight.js/-/highlight.js-11.0.1.tgz"
+  "version" "11.0.1"
 
 "history@^4.9.0":
   "integrity" "sha512-36nwAD620w12kuzPAsyINPWJqlNbij+hpK1k9XRloDtym8mxzGYl2c17LnV6IAGB2Dmg4tEa7G7DlawS0+qjew=="
