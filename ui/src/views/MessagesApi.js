@@ -47,7 +47,9 @@ export const MessagesApiComponent = () => {
         });
       }
     };
-    callApi();
+    setInterval(() => {
+      callApi();
+    }, 60000);
   })
 
   const handleConsent = async () => {
