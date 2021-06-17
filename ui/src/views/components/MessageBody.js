@@ -3,10 +3,16 @@ import React, { useState, useEffect } from "react";
 import UserCard from "./UserCard";
 
 function MessageBody(props) {
-  let [messageText, setMessageText] = useState("");
+  let [messegeMeta, setMessegeMeta] = useState("");
 
-  const onclick = (message) => {
-    setMessageText(message);
+  const onclick = (messege) => {
+    setMessegeMeta({
+      ...messegeMeta,
+      name: messege.name,
+      email: messege.email,
+      subject: messege.subject = messege.subject ? messege.subject : "No Subject",
+      message: messege.message,
+    });
   };
 
   const messages = props.messages;
@@ -18,7 +24,7 @@ function MessageBody(props) {
         name={message.name}
         email={message.email}
         onclick={() => {
-          onclick(message.message);
+          onclick(message);
         }}
       />
   ));
@@ -43,10 +49,17 @@ function MessageBody(props) {
       { !isMobile &&
       <div className="row">
       <div className="col-sm scrollbar scrollbar-primary">{UserMessage}</div>
-      <div className="col-sm">
-        <p>
-          {messageText}
-        </p>
+      <div className="col-sm cursorarrow">
+        <div className="">
+          <h6 className="text-info"><a href={"mailto:"+messegeMeta.email}>{messegeMeta.name}</a></h6>
+          <h6 className="text-dark">{messegeMeta.subject}</h6>
+        </div>
+        <br/>
+        <div className="">
+          <p>
+            {messegeMeta.message}
+          </p>
+        </div>
       </div>
     </div>
       }
@@ -54,10 +67,17 @@ function MessageBody(props) {
       { isMobile &&
       <div className="col">
       <div className="col-sm scroll-m">{UserMessage}</div>
-      <div className="col-sm">
-        <p>
-          {messageText}
-        </p>
+      <div className="col-sm cursorarrow">
+        <div className="">
+          <h6 className="text-info">{messegeMeta.name}</h6>
+          <h6 className="text-dark">{messegeMeta.subject}</h6>
+        </div>
+        <br/>
+        <div className="">
+          <p>
+            {messegeMeta.message}
+          </p>
+        </div>
       </div>
     </div>
       }

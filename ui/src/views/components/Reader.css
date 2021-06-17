@@ -1,0 +1,11 @@
+/*
+ *
+ */
+
+/* Cursor Css */
+.cursorpointer {
+  cursor: pointer;
+}
+.cursorarrow {
+  cursor: default;
+}

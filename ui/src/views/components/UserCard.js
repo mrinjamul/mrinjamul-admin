@@ -2,11 +2,13 @@ import React from "react";
 
 function UserCard(props) {
   return (
-    <div className="rounded border border-secondary p-1 m-1">
-      <div className="" onClick={props.onclick}>
-        <strong>{props.name}</strong>
+    <div className="rounded border p-1 m-1">
+      <div className="cursorpointer" onClick={props.onclick}>
+        <strong className="text-dark">{props.name}</strong>
         <br />
-        <small>{props.email}</small>
+        {/* <a href={"mailto:"+ props.email}> */}
+          <small className="text-secondary">{props.email}</small>
+        {/* </a> */}
       </div>
     </div>
   );

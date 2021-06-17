@@ -2,6 +2,8 @@ import React from "react";
 
 import MessageBody from "./MessageBody";
 
+import "./Reader.css";
+
 function Reader(props) {
   let messages = props.messages;
   return (
