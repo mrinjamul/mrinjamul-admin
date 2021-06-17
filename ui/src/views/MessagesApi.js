@@ -23,34 +23,8 @@ export const MessagesApiComponent = () => {
   } = useAuth0();
 
   useEffect(() => {
-    const callApi = async () => {
-      try {
-        const token = await getAccessTokenSilently();
-  
-        const response = await fetch(`${apiOrigin}/api/messages`, {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        });
-  
-        const responseData = await response.json();
-  
-        setState({
-          ...state,
-          showResult: true,
-          apiMessage: responseData,
-        });
-      } catch (error) {
-        setState({
-          ...state,
-          error: error.error,
-        });
-      }
-    };
-    setInterval(() => {
-      callApi();
-    }, 60000);
-  },[apiOrigin,getAccessTokenSilently,state])
+    callApi();
+  })
 
   const handleConsent = async () => {
     try {
