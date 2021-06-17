@@ -50,7 +50,7 @@ export const MessagesApiComponent = () => {
     setInterval(() => {
       callApi();
     }, 60000);
-  })
+  },[apiOrigin,getAccessTokenSilently,state])
 
   const handleConsent = async () => {
     try {
