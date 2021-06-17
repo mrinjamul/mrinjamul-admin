@@ -5,7 +5,8 @@ import { useAuth0, withAuthenticationRequired } from "@auth0/auth0-react";
 import { getConfig } from "../config";
 import Loading from "../components/Loading";
 import Reader from "./components/Reader";
-import MessageBar from "./components/MessageBar";
+
+import chatlogo from "../assets/chat-logo.svg";
 
 export const MessagesApiComponent = () => {
   const { apiOrigin = "http://localhost:3000", audience } = getConfig();
@@ -22,9 +23,12 @@ export const MessagesApiComponent = () => {
     getAccessTokenWithPopup,
   } = useAuth0();
 
-  useEffect(() => {
-    callApi();
-  })
+  // Disable useEffect() for limited access to the API
+
+  // useEffect(() => {
+  //   callApi();
+  // })
+  console.log("Disable autoreload for limited access to the API");
 
   const handleConsent = async () => {
     try {
@@ -118,9 +122,19 @@ export const MessagesApiComponent = () => {
             </a>
           </Alert>
         )}
-        {state.showResult && <div className="text-center">
-        <MessageBar numberOfMessage={state.apiMessage.length} />
-        </div>}
+        { state.showResult &&
+        <div className="text-center">
+          <div class="chat-notification">
+            <div class="chat-notification-logo-wrapper">
+              <img class="chat-notification-logo" src={chatlogo} alt="ChitChat Logo"/>
+            </div>
+            <div class="chat-notification-content">
+              <h4 class="chat-notification-title">Hello,</h4>
+              <p class="chat-notification-message">You have {state.apiMessage.length} message(s)!</p>
+            </div>
+          </div>
+        </div>
+        }
 
         <div className="text-right">
           <Button

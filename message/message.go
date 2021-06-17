@@ -20,12 +20,7 @@ func init() {
 }
 
 func initialiseList() {
-	var err error
-	list, err = getFireStoreData()
-	if err != nil {
-		panic(err)
-	}
-
+	list = []Message{}
 }
 
 func getFireStoreData() ([]Message, error) {
