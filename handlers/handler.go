@@ -10,16 +10,26 @@ import (
 	"github.com/mrinjamul/mrinjamul-admin/message"
 )
 
-// GetProjectsHandler returns all current todo items
+// GetProjectsHandler returns all project informations
 func GetProjectsHandler(c *gin.Context) {
 	c.JSON(http.StatusOK, gin.H{
 		"message": "comming soon",
 	})
 }
 
-// GetMessagesHandler returns all current todo items
+// GetMessagesHandler returns all current messeges
 func GetMessagesHandler(c *gin.Context) {
 	c.JSON(http.StatusOK, message.Get())
+}
+
+// AddMessegeHandler adds a new messege to the firestore
+func AddMessegeHandler(c *gin.Context) {
+	messegeItem, statusCode, err := convertHTTPBodyToMessage(c.Request.Body)
+	if err != nil {
+		c.JSON(statusCode, err)
+		return
+	}
+	c.JSON(statusCode, gin.H{"id": message.Add(messegeItem)})
 }
 
 // DeleteMessageHandler will delete a specified message based on user http input
@@ -32,7 +42,7 @@ func DeleteMessageHandler(c *gin.Context) {
 	c.JSON(http.StatusOK, "")
 }
 
-// MarkAsReadHandler will complete a specified todo based on user http input
+// MarkAsReadHandler will mark a specified messege as read, based on user http input
 func MarkAsReadHandler(c *gin.Context) {
 	todoItem, statusCode, err := convertHTTPBodyToMessage(c.Request.Body)
 	if err != nil {

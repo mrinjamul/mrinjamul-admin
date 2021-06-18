@@ -50,6 +50,9 @@ func main() {
 	// coming soon
 	r.GET("/api/projects", handlers.GetProjectsHandler)
 
+	// unauthorized POST endpoint for recieving messeges from viewers
+	r.POST("/api/messages", handlers.AddMessegeHandler)
+
 	// authorized handler
 	authorized := r.Group("/")
 	// auth0 used here

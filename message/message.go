@@ -71,6 +71,43 @@ func Get() []Message {
 	return list
 }
 
+// Add will add a new messege based on http post request
+func Add(message Message) string {
+	t, err := createMessege(message)
+	if err != nil {
+		return "0"
+	}
+	mtx.Lock()
+	list = append(list, t)
+	mtx.Unlock()
+	return t.ID
+}
+
+func createMessege(msg Message) (Message, error) {
+	msg = Message{
+		ID:      "1",
+		Name:    msg.Name,
+		Email:   msg.Email,
+		Subject: msg.Subject,
+		Message: msg.Message,
+		Read:    false,
+	}
+	if msg.Name == "" {
+		return Message{}, errors.New("error: name can not be nil")
+	}
+	if msg.Email == "" {
+		return Message{}, errors.New("error: email address can not be nil")
+	}
+	if msg.Subject == "" {
+		return Message{}, errors.New("error: subject can not be nil")
+	}
+	if msg.Message == "" {
+		return Message{}, errors.New("error: messege body can not be nil")
+	}
+
+	return msg, nil
+}
+
 // Delete will remove a Messenge from the Messenge list
 func Delete(id string) error {
 	location, err := findMessageLocation(id)
