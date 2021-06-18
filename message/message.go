@@ -3,9 +3,11 @@ package message
 import (
 	"context"
 	"errors"
+	"strconv"
 	"sync"
 
 	"github.com/mrinjamul/mrinjamul-admin/firebases"
+	"github.com/rs/xid"
 	"google.golang.org/api/iterator"
 )
 
@@ -73,19 +75,72 @@ func Get() []Message {
 
 // Add will add a new messege based on http post request
 func Add(message Message) string {
-	t, err := createMessege(message)
+	msg, err := createMessege(message)
 	if err != nil {
 		return "0"
 	}
-	mtx.Lock()
-	list = append(list, t)
-	mtx.Unlock()
-	return t.ID
+	err = sendDataFirestore(msg)
+	if err != nil {
+		return "0"
+	}
+	return msg.ID
+}
+
+func sendDataFirestore(msg Message) error {
+	docName := xid.New().String()
+	doc := make(map[string]interface{})
+	// doc[docName] = map[string]interface{}{
+	// 	"id":      msg.ID,
+	// 	"name":    msg.Name,
+	// 	"email":   msg.Email,
+	// 	"subject": msg.Subject,
+	// 	"message": msg.Message,
+	// 	"read":    false,
+	// }
+	doc["id"] = msg.ID
+	doc["name"] = msg.Name
+	doc["email"] = msg.Email
+	doc["subject"] = msg.Subject
+	doc["message"] = msg.Message
+	doc["read"] = msg.Read
+	ctx := context.Background()
+	app, err := firebases.GetFirebaseApp()
+	if err != nil {
+		return err
+	}
+	client, err := app.Firestore(ctx)
+	if err != nil {
+		return err
+	}
+	_, err = client.Collection("github-messages").Doc(docName).Set(ctx, doc)
+	if err != nil {
+		// Handle any errors in an appropriate way, such as returning them.
+		return err
+	}
+	return nil
 }
 
 func createMessege(msg Message) (Message, error) {
+	var id int
+	list, err := getFireStoreData()
+	if err != nil {
+		return Message{}, err
+	}
+	for _, m := range list {
+		if m.ID == "" {
+			m.ID = "0"
+		}
+		mId, err := strconv.Atoi(m.ID)
+		if err != nil {
+			return Message{}, err
+		}
+		if mId > id {
+			id = mId
+		}
+	}
+
 	msg = Message{
-		ID:      "1",
+		ID:      strconv.Itoa(id + 1),
 		Name:    msg.Name,
 		Email:   msg.Email,
 		Subject: msg.Subject,
