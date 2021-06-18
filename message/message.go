@@ -5,6 +5,7 @@ import (
 	"errors"
 	"strconv"
 	"sync"
+	"time"
 
 	"github.com/mrinjamul/mrinjamul-admin/firebases"
 	"github.com/rs/xid"
@@ -55,12 +56,13 @@ func getFireStoreData() ([]Message, error) {
 
 // Message data structure
 type Message struct {
-	ID      string `json:"id"`
-	Name    string `json:"name"`
-	Email   string `json:"email"`
-	Subject string `json:"subject"`
-	Message string `json:"message"`
-	Read    bool   `json:"read"`
+	ID       string    `json:"id"`
+	Name     string    `json:"name"`
+	Email    string    `json:"email"`
+	Subject  string    `json:"subject"`
+	Message  string    `json:"message"`
+	Read     bool      `json:"read"`
+	CreateAt time.Time `json:"createAt"`
 }
 
 // Get retrieves all elements from the Message list
@@ -96,13 +98,15 @@ func sendDataFirestore(msg Message) error {
 	// 	"subject": msg.Subject,
 	// 	"message": msg.Message,
 	// 	"read":    false,
-	// }
+	// } // mistakenly used
 	doc["id"] = msg.ID
 	doc["name"] = msg.Name
 	doc["email"] = msg.Email
 	doc["subject"] = msg.Subject
 	doc["message"] = msg.Message
 	doc["read"] = msg.Read
+	doc["createAt"] = msg.CreateAt
+
 	ctx := context.Background()
 	app, err := firebases.GetFirebaseApp()
 	if err != nil {
@@ -140,12 +144,13 @@ func createMessege(msg Message) (Message, error) {
 	}
 
 	msg = Message{
-		ID:      strconv.Itoa(id + 1),
-		Name:    msg.Name,
-		Email:   msg.Email,
-		Subject: msg.Subject,
-		Message: msg.Message,
-		Read:    false,
+		ID:       strconv.Itoa(id + 1),
+		Name:     msg.Name,
+		Email:    msg.Email,
+		Subject:  msg.Subject,
+		Message:  msg.Message,
+		Read:     false,
+		CreateAt: time.Now(),
 	}
 	if msg.Name == "" {
 		return Message{}, errors.New("error: name can not be nil")
