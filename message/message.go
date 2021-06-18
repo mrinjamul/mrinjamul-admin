@@ -3,6 +3,7 @@ package message
 import (
 	"context"
 	"errors"
+	"sort"
 	"strconv"
 	"sync"
 	"time"
@@ -72,6 +73,11 @@ func Get() []Message {
 	if err != nil {
 		panic(err)
 	}
+	sort.Slice(list[:], func(i, j int) bool {
+		i, _ = strconv.Atoi(list[i].ID)
+		j, _ = strconv.Atoi(list[j].ID)
+		return i < j
+	})
 	return list
 }
 
