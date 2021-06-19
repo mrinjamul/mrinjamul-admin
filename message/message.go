@@ -63,6 +63,7 @@ type Message struct {
 	Subject  string    `json:"subject"`
 	Message  string    `json:"message"`
 	Read     bool      `json:"read"`
+	IP       string    `json:"ip"`
 	CreateAt time.Time `json:"createAt"`
 }
 
@@ -111,6 +112,7 @@ func sendDataFirestore(msg Message) error {
 	doc["subject"] = msg.Subject
 	doc["message"] = msg.Message
 	doc["read"] = msg.Read
+	doc["ip"] = msg.IP
 	doc["createAt"] = msg.CreateAt
 
 	ctx := context.Background()
@@ -156,6 +158,7 @@ func createMessege(msg Message) (Message, error) {
 		Subject:  msg.Subject,
 		Message:  msg.Message,
 		Read:     false,
+		IP:       msg.IP,
 		CreateAt: time.Now(),
 	}
 	if msg.Name == "" {

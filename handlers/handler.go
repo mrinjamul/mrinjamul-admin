@@ -29,6 +29,7 @@ func AddMessegeHandler(c *gin.Context) {
 		c.JSON(statusCode, err)
 		return
 	}
+	messegeItem.IP = c.ClientIP()
 	c.JSON(statusCode, gin.H{"id": message.Add(messegeItem)})
 }
 
