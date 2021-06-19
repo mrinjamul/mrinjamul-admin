@@ -12,6 +12,8 @@ function MessageBody(props) {
       email: messege.email,
       subject: messege.subject = messege.subject ? messege.subject : "No Subject",
       message: messege.message,
+      ip: messege.ip,
+      createAt: Date(messege.createAt),
     });
   };
 
@@ -44,18 +46,20 @@ function MessageBody(props) {
   let isMobile = (width <= 768);
 
   return (
-    <div className="container">
+    <div className="w-100">
 
       { !isMobile &&
       <div className="row">
       <div className="col-sm scrollbar scrollbar-primary">{UserMessage}</div>
       <div className="col-sm cursorarrow">
         <div className="">
+          <div className="float-right text-secondary"><small> {messegeMeta.ip} </small></div>
           <h6 className="text-info"><a href={"mailto:"+messegeMeta.email}>{messegeMeta.name}</a></h6>
+          <div className="float-right text-secondary"><small><code> {messegeMeta.createAt} </code></small></div>
           <h6 className="text-dark">{messegeMeta.subject}</h6>
         </div>
         <br/>
-        <div className="">
+        <div className="w-100">
           <p>
             {messegeMeta.message}
           </p>
@@ -69,11 +73,13 @@ function MessageBody(props) {
       <div className="col-sm scroll-m">{UserMessage}</div>
       <div className="col-sm cursorarrow">
         <div className="">
-          <h6 className="text-info">{messegeMeta.name}</h6>
+          <div className="float-right text-secondary"><small> {messegeMeta.ip} </small></div>
+          <h6 className="text-info"><a href={"mailto:"+messegeMeta.email}>{messegeMeta.name}</a></h6>
+          <div className="float-right text-secondary"><small><code> {messegeMeta.createAt} </code></small></div>
           <h6 className="text-dark">{messegeMeta.subject}</h6>
         </div>
         <br/>
-        <div className="">
+        <div className="w-100">
           <p>
             {messegeMeta.message}
           </p>

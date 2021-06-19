@@ -1,4 +1,5 @@
-import React, { useState,useEffect } from "react";
+import React, { useState } from "react";
+// import { useEffect } from "react";
 import { Button, Alert } from "reactstrap";
 // import Highlight from "../components/Highlight";
 import { useAuth0, withAuthenticationRequired } from "@auth0/auth0-react";
@@ -102,7 +103,7 @@ export const MessagesApiComponent = () => {
             You need to{" "}
             <a
               href="#/"
-              class="alert-link"
+              className="alert-link"
               onClick={(e) => handle(e, handleConsent)}
             >
               consent to get access to users api
@@ -115,7 +116,7 @@ export const MessagesApiComponent = () => {
             You need to{" "}
             <a
               href="#/"
-              class="alert-link"
+              className="alert-link"
               onClick={(e) => handle(e, handleLoginAgain)}
             >
               log in again
@@ -124,13 +125,13 @@ export const MessagesApiComponent = () => {
         )}
         { state.showResult &&
         <div className="text-center">
-          <div class="chat-notification">
-            <div class="chat-notification-logo-wrapper">
-              <img class="chat-notification-logo" src={chatlogo} alt="ChitChat Logo"/>
+          <div className="chat-notification">
+            <div className="chat-notification-logo-wrapper">
+              <img className="chat-notification-logo" src={chatlogo} alt="ChitChat Logo"/>
             </div>
-            <div class="chat-notification-content">
-              <h4 class="chat-notification-title">Hello,</h4>
-              <p class="chat-notification-message">You have {state.apiMessage.length} message(s)!</p>
+            <div className="chat-notification-content">
+              <h4 className="chat-notification-title">Hello Injamul,</h4>
+              <p className="chat-notification-message">You have {state.apiMessage.length} message(s)!</p>
             </div>
           </div>
         </div>
