@@ -6,6 +6,7 @@ function MessageBody(props) {
   let [messegeMeta, setMessegeMeta] = useState("");
 
   const onclick = (messege) => {
+    // TODO: fix date format
     setMessegeMeta({
       ...messegeMeta,
       name: messege.name,
@@ -13,7 +14,7 @@ function MessageBody(props) {
       subject: messege.subject = messege.subject ? messege.subject : "No Subject",
       message: messege.message,
       ip: messege.ip,
-      createAt: Date(messege.createAt),
+      createAt: messege.createAt,
     });
   };
 
@@ -45,6 +46,8 @@ function MessageBody(props) {
 
   let isMobile = (width <= 768);
 
+  // css does not work but I use Reactjs
+
   return (
     <div className="w-100">
 
@@ -56,6 +59,7 @@ function MessageBody(props) {
           <div className="float-right text-secondary"><small> {messegeMeta.ip} </small></div>
           <h6 className="text-info"><a href={"mailto:"+messegeMeta.email}>{messegeMeta.name}</a></h6>
           <div className="float-right text-secondary"><small><code> {messegeMeta.createAt} </code></small></div>
+          <br/>
           <h6 className="text-dark">{messegeMeta.subject}</h6>
         </div>
         <br/>
