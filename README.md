@@ -102,4 +102,4 @@ docker run --rm -dp 3000:3000 --name myadmin mrinjamul-admin:latest
 
 ## License
 
-- Currently NO License
+- under [MIT license](https://github.com/mrinjamul/mrinjamul-admin/blob/master/LICENSE)
