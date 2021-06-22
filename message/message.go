@@ -129,6 +129,7 @@ func sendDataFirestore(msg Message) error {
 		// Handle any errors in an appropriate way, such as returning them.
 		return err
 	}
+	defer client.Close()
 	return nil
 }
 
