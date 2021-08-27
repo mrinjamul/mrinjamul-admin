@@ -37,7 +37,7 @@ func getFireStoreData() ([]Message, error) {
 	if err != nil {
 		return []Message{}, err
 	}
-	iter := client.Collection("github-messages").Documents(ctx)
+	iter := client.Collection("messages").Documents(ctx)
 	messages := []Message{}
 	for {
 		msg := Message{}
@@ -124,7 +124,7 @@ func sendDataFirestore(msg Message) error {
 	if err != nil {
 		return err
 	}
-	_, err = client.Collection("github-messages").Doc(docName).Set(ctx, doc)
+	_, err = client.Collection("messages").Doc(docName).Set(ctx, doc)
 	if err != nil {
 		// Handle any errors in an appropriate way, such as returning them.
 		return err
